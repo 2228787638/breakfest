@@ -1,0 +1,33 @@
+{
+    "navigationBarTitleText": "配送中",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 150,
+    "backgroundTextStyle": "dark",
+    "usingComponents": {
+      "van-search": "/static/vant-weapp/search/index",
+      "van-row": "/static/vant-weapp/row/index",
+      "van-col": "/static/vant-weapp/col/index",
+      "van-tab": "/static/vant-weapp/tab/index",
+      "van-tabs": "/static/vant-weapp/tabs/index",
+      "van-cell": "/static/vant-weapp/cell/index",
+      "van-cell-group": "/static/vant-weapp/cell-group/index",
+      "van-radio": "/static/vant-weapp/radio/index",
+      "van-radio-group": "/static/vant-weapp/radio-group/index",
+      "van-field": "/static/vant-weapp/field/index",
+      "van-button": "/static/vant-weapp/button/index",
+      "van-card": "/static/vant-weapp/card/index",
+      "van-popup": "/static/vant-weapp/popup/index",
+      "van-icon": "/static/vant-weapp/icon/index",
+      "van-panel": "/static/vant-weapp/panel/index",
+      "van-action-sheet": "/static/vant-weapp/cell-group/index",
+      "van-area": "/static/vant-weapp/area/index",
+      "van-dialog": "/static/vant-weapp/dialog/index",
+      "van-image": "/static/vant-weapp/image/index",
+      "van-divider": "/static/vant-weapp/divider/index",
+      "van-notice-bar": "/static/vant-weapp/notice-bar/index",
+      "van-circle": "/static/vant-weapp/circle/index",
+      "van-nav-bar": "/static/vant-weapp/nav-bar/index",
+      "van-swipe-cell": "/static/vant-weapp/swipe-cell/index",
+      "van-checkbox": "/static/vant-weapp/checkbox/index"
+    }
+  }

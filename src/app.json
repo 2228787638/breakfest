@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/complete/main",
+    "pages/me/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fafafa",
+    "selectedColor": "#333",
+    "borderStyle": "white",
+
+    "list": [{
+      "text": "配送中",
+      "pagePath": "pages/index/main",
+      "iconPath": "static/tabs/process.png",
+      "selectedIconPath": "static/tabs/process-active.png"
+    }, {
+      "text": "已完成",
+      "pagePath": "pages/complete/main",
+      "iconPath": "static/tabs/complete.png",
+      "selectedIconPath": "static/tabs/complete-active.png"
+    }, {
+      "text": "我的",
+      "pagePath": "pages/me/main",
+      "iconPath": "static/tabs/me.png",
+      "selectedIconPath": "static/tabs/me-active.png"
+    }],
+
+    "items": [{
+      "name": "配送中",
+      "pagePath": "pages/index/main",
+      "icon": "static/tabs/process.png",
+      "activeIcon": "static/tabs/process-active.png"
+    }, {
+      "name": "已完成",
+      "pagePath": "pages/complete/main",
+      "icon": "static/tabs/complete.png",
+      "activeIcon": "static/tabs/complete-active.png"
+    }, {
+      "name": "我的",
+      "pagePath": "pages/me/main",
+      "icon": "static/tabs/me.png",
+      "activeIcon": "static/tabs/me-active.png"
+    }],
+    "position": "bottom"
+  }
+}
