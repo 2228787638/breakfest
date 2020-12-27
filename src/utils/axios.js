@@ -3,7 +3,7 @@ import axios from 'axios'
  * axios配置
  */
 // axios请求拦截器
-axios.defaults.baseURL = 'https://www.ygfygf.cn'
+axios.defaults.baseURL = 'http://106.53.102.70:9000'
 axios.interceptors.request.use(config => {
   mpvue.showLoading({title: '加载中...'})
   return config

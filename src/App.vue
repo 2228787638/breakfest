@@ -1,5 +1,29 @@
 <script>
+import {wxlogin} from './api/User'
 export default {
+  methods: {
+    async login () {
+      let me = this
+      let obj = wx.getStorageSync('USER_INFO')
+      if (obj) {
+        wx.switchTab({url: this.path})
+      } else {
+        wx.login({
+          async success (res) {
+            if (res.code) {
+              me.code = res.code
+              wx.setStorageSync('code', res.code)
+              let result = await wxlogin(res.code)
+              if (result.data.retCode === 200) {
+                console.log(result)
+                // wx.setStorageSync('token', result.data.data)
+              }
+            }
+          }
+        })
+      }
+    }
+  },
   created () {
     // 调用API从本地缓存中获取数据
     /*
@@ -26,6 +50,9 @@ export default {
   },
   log () {
     console.log(`log at:${Date.now()}`)
+  },
+  onShow () {
+    this.login()
   }
 }
 </script>

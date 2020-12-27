@@ -1,126 +1,113 @@
 <template>
-  <div @click="clickHandle">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" />
-
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" :value="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-
-    <div class="all">
-        <div class="left">
-        </div>
-        <div class="right">
-        </div>
-    </div>
+  <div>
+    <van-card v-for="(value,index) in getOrdersComputed" :key="index"
+      :num="value.amount">
+      <view slot="title">
+        {{value.orderNumber}}
+      </view>
+      <view slot="desc" style="font-size: 15px;">
+        柜号： <van-tag type="warning" size="large">{{value.box.number}}</van-tag>
+      </view>
+      <view slot="price">
+          <span style="font-size: 14px">
+            柜子地址： {{value.box.address}}
+          </span>
+      </view>
+      <view slot="thumb">
+        <van-checkbox v-if = "batchEdit === true" :value="value.checked" @change="onChange(value)">
+          <van-image width="50px" height="5rem" src="/static/images/chose_ico.png"/>
+        </van-checkbox>
+        <van-image v-else width="80px" height="5rem" src="/static/images/order_ico.png"/>
+      </view>
+    </van-card>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
-export default {
-  data () {
-    return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
-    }
-  },
-
-  components: {
-    card
-  },
-
-  methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
+  import {getOrdersByStatus} from '@/api/Order'
+  export default {
+    data () {
+      return {
+        activeTab: 0,
+        orders: [],
+        currentPage: 0,
+        total: 0,
+        batchEdit: false
       }
     },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
-  },
 
-  created () {
-    // let app = getApp()
+    components: {
+    },
+
+    methods: {
+      async getOrders (status) {
+        let result = await getOrdersByStatus(status, this.currentPage, 10)
+        this.orders = result.data.list
+        this.total = result.data.total
+      },
+      batchEditClick () {
+        this.batchEdit = this.batchEdit === false
+      },
+      onChange (order) {
+        order.checked = order.checked === false
+      }
+    },
+    async onPullDownRefresh () {
+      this.currentPage = 0
+      await this.getOrders('4')
+      mpvue.stopPullDownRefresh()
+    },
+    async onReachBottom () {
+      if ((this.currentPage + 1) * 10 > this.total) {
+        mpvue.showToast({ icon: 'none', title: '到底啦！' })
+      } else {
+        this.currentPage = this.currentPage + 1
+        let result = await getOrdersByStatus('4', this.currentPage, 10)
+        this.orders = this.orders.concat(result.data.list)
+      }
+    },
+    mounted () {
+      this.getOrders('4')
+    },
+    computed: {
+      getOrdersComputed () {
+        return this.orders
+      }
+    },
+    created () {
+      // let app = getApp()
+    }
   }
-}
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
-}
+  .van-swipe-cell__left {
+    display: inline-block;
+    width: 65px;
+    height: 100%;
+    font-size: 15px;
+    line-height: 44px;
+    color: #fff;
+    text-align: center;
+    background-color: rgb(254, 61, 61);
+  }
+  .van-swipe-cell__right {
+    display: inline-block;
+    width: 65px;
+    height: 100%;
+    font-size: 15px;
+    line-height: 44px;
+    color: #fff;
+    text-align: center;
+    background-color: #00a900;
+  }
+  .batchOperationBtn {
+    font-size: 30px;
+    position:fixed;
+    display:flex;
+    justify-content: center;
+    bottom:20px;
+    z-index: 99;
+    right:20px;
+  }
 </style>

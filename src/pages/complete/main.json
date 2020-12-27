@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "配送中",
+    "navigationBarTitleText": "配送完成",
     "enablePullDownRefresh": true,
     "onReachBottomDistance": 150,
     "backgroundTextStyle": "dark",
